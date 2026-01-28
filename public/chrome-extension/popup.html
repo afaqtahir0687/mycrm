@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            width: 400px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .source-select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        button:hover {
+            background: #1565c0;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .status.success {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+        .status.error {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+        .status.info {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .instructions {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 12px;
+            color: #856404;
+        }
+        .data-preview {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h2>CRM Data Scraper</h2>
+    
+    <div class="instructions">
+        <strong>Instructions:</strong><br>
+        1. Open your social media account in a tab<br>
+        2. Navigate to the page with data you want to extract<br>
+        3. Select the source below<br>
+        4. Click "Extract Data" to scrape the current tab
+    </div>
+    
+    <select id="source-select" class="source-select">
+        <option value="">Select Source</option>
+        <option value="facebook">Facebook</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="instagram">Instagram</option>
+        <option value="twitter">Twitter</option>
+        <option value="tiktok">TikTok</option>
+    </select>
+    
+    <button id="extract-btn">Extract Data from Current Tab</button>
+    <button id="send-btn" disabled>Send to CRM</button>
+    
+    <div id="status" class="status"></div>
+    
+    <div id="data-preview" class="data-preview" style="display: none;">
+        <strong>Extracted Data Preview:</strong>
+        <div id="preview-content"></div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
+

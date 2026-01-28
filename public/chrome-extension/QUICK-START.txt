@@ -1,0 +1,36 @@
+==============================================
+QUICK START GUIDE - CHROME EXTENSION
+==============================================
+
+LOCATION OF EXTENSION:
+C:\xampp\htdocs\crm\public\chrome-extension
+
+INSTALLATION (3 STEPS):
+-----------------------
+1. Open Chrome → Type: chrome://extensions/
+2. Turn ON "Developer mode" (top-right)
+3. Click "Load unpacked" → Select: C:\xampp\htdocs\crm\public\chrome-extension
+
+HOW TO USE:
+-----------
+1. Open Facebook/LinkedIn/etc. in a Chrome tab
+2. Go to Friends/Groups/Connections page
+3. Click extension icon (should appear in toolbar after pinning)
+4. Select source → Click "Extract Data"
+5. Review data → Click "Send to CRM"
+
+IF ICONS ARE MISSING:
+---------------------
+The extension will work even without icon files. If you want icons:
+1. Open create-icons.html in Chrome
+2. Icons will download automatically
+3. Place them in the extension folder
+
+TROUBLESHOOTING:
+----------------
+- Extension not showing? Make sure you pinned it from the puzzle icon
+- Data not extracting? Make sure you're on the correct page (Friends/Groups)
+- Can't send to CRM? Make sure CRM is running at http://localhost/crm
+
+==============================================
+

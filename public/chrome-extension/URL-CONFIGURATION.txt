@@ -1,0 +1,68 @@
+================================================================================
+CRM URL CONFIGURATION FOR CHROME EXTENSION
+================================================================================
+
+If you're getting a 404 error, the extension might be using the wrong URL.
+
+The extension will automatically try to detect the correct URL, but if it fails,
+you may need to configure it manually.
+
+POSSIBLE CRM URLS:
+==================
+
+1. If Apache document root is c:\xampp\htdocs:
+   - URL: http://localhost/crm/public
+
+2. If Apache is configured with a VirtualHost pointing to crm/public:
+   - URL: http://localhost/crm
+
+3. If you're using Laravel's built-in server:
+   - URL: http://localhost:8000
+
+HOW TO CHECK YOUR CRM URL:
+==========================
+
+1. Open your browser
+2. Navigate to your CRM (e.g., http://localhost/crm or http://localhost/crm/public)
+3. Copy the exact URL from the address bar
+4. That's your CRM URL!
+
+HOW TO CONFIGURE THE EXTENSION:
+================================
+
+OPTION 1: Auto-Detection (Default)
+-----------------------------------
+The extension will automatically try:
+- http://localhost/crm
+- http://localhost/crm/public
+
+OPTION 2: Manual Configuration
+-------------------------------
+1. Open Chrome Extensions: chrome://extensions/
+2. Find "CRM Data Scraper"
+3. Click "Details"
+4. Under "Storage" or in the extension's popup, set the CRM URL
+
+OPTION 3: Update Default in Extension Code
+-------------------------------------------
+Edit popup.js line 49:
+Change: const baseUrl = result.crmUrl || 'http://localhost/crm';
+To:     const baseUrl = result.crmUrl || 'http://localhost/crm/public';
+
+TROUBLESHOOTING:
+================
+
+Problem: 404 Not Found
+Solution: The URL is wrong. Try adding /public to the end:
+         http://localhost/crm/public
+
+Problem: Still getting 404
+Solution: Check if your CRM is accessible in the browser first.
+          Make sure Apache is running and the .htaccess file exists.
+
+Problem: Extension can't connect
+Solution: Make sure your CRM is running and accessible via browser.
+          Check firewall settings if using a different host.
+
+================================================================================
+

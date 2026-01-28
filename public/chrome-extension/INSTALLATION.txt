@@ -1,0 +1,58 @@
+================================================================================
+CHROME EXTENSION INSTALLATION GUIDE
+================================================================================
+
+STEP 1: Open Chrome Extensions Page
+------------------------------------
+1. Open Google Chrome browser
+2. Type in address bar: chrome://extensions/
+3. Press Enter
+
+STEP 2: Enable Developer Mode
+------------------------------
+1. Look for "Developer mode" toggle in top-right corner
+2. Turn it ON (it will turn blue)
+
+STEP 3: Load the Extension
+---------------------------
+1. Click the "Load unpacked" button (top-left)
+2. Navigate to: C:\xampp\htdocs\crm\public\chrome-extension
+3. Click "Select Folder"
+
+STEP 4: Pin Extension to Toolbar
+----------------------------------
+1. Click the puzzle piece icon (🧩) in Chrome toolbar
+2. Find "CRM Data Scraper" extension
+3. Click the pin icon 📌 next to it
+
+STEP 5: Verify Installation
+----------------------------
+You should now see the CRM Data Scraper icon in your Chrome toolbar.
+
+================================================================================
+HOW TO USE THE EXTENSION
+================================================================================
+
+1. Open your social media account (Facebook, LinkedIn, etc.) in a Chrome tab
+2. Navigate to the page with data you want:
+   - Facebook: Friends list, Group members page
+   - LinkedIn: Connections page, Search results
+   - Instagram: Followers/Following page
+   - Twitter: Followers/Following page
+   - TikTok: Followers/Following page
+
+3. Click the CRM Data Scraper extension icon
+4. Select the source (Facebook, LinkedIn, etc.)
+5. Click "Extract Data from Current Tab"
+6. Wait for extraction to complete
+7. Review the extracted data preview
+8. Click "Send to CRM" to import the data
+
+IMPORTANT NOTES:
+- Make sure your CRM is running at: http://localhost/crm
+- The extension only extracts data from the currently active tab
+- All data stays on your computer until you send it to CRM
+- Ensure compliance with platform Terms of Service
+
+================================================================================
+

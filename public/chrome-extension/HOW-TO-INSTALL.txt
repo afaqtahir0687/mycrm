@@ -1,0 +1,118 @@
+================================================================================
+CHROME EXTENSION - INSTALLATION GUIDE
+================================================================================
+
+STEP-BY-STEP INSTRUCTIONS:
+==========================
+
+1. OPEN CHROME EXTENSIONS PAGE
+   ---------------------------
+   - Open Google Chrome browser
+   - In the address bar, type: chrome://extensions/
+   - Press Enter
+
+2. ENABLE DEVELOPER MODE
+   ----------------------
+   - Look at the top-right corner of the extensions page
+   - Find the toggle switch labeled "Developer mode"
+   - Turn it ON (it should turn blue)
+
+3. LOAD THE EXTENSION
+   -------------------
+   - Click the "Load unpacked" button (top-left area)
+   - A file browser window will open
+   - Navigate to: C:\xampp\htdocs\crm\public\chrome-extension
+   - Click "Select Folder" or "Open"
+
+4. PIN THE EXTENSION (IMPORTANT!)
+   -------------------------------
+   - Click the puzzle piece icon (🧩) in Chrome's toolbar (top-right)
+   - Find "CRM Data Scraper" in the list
+   - Click the pin icon (📌) next to it
+   - The extension icon should now appear in your toolbar
+
+5. VERIFY INSTALLATION
+   --------------------
+   - You should see "CRM Data Scraper" extension listed on chrome://extensions/
+   - You should see the extension icon in your Chrome toolbar
+
+================================================================================
+HOW TO USE THE EXTENSION:
+================================================================================
+
+FOR FACEBOOK:
+-------------
+1. Open Facebook in a Chrome tab
+2. Navigate to one of these pages:
+   - Friends list: https://www.facebook.com/friends
+   - A Group members page
+   - Your profile page
+3. Click the CRM Data Scraper extension icon in the toolbar
+4. Select "Facebook" from the dropdown
+5. Click "Extract Data from Current Tab"
+6. Wait for extraction (you'll see a success message)
+7. Review the extracted data preview
+8. Click "Send to CRM" to import the data
+
+FOR LINKEDIN:
+-------------
+1. Open LinkedIn in a Chrome tab
+2. Navigate to:
+   - Connections page
+   - Search results page
+   - Company page
+3. Click extension icon → Select "LinkedIn"
+4. Click "Extract Data" → "Send to CRM"
+
+FOR INSTAGRAM/TWITTER/TIKTOK:
+------------------------------
+1. Open the platform in a Chrome tab
+2. Navigate to followers/following page
+3. Click extension icon → Select source
+4. Extract and send data
+
+================================================================================
+TROUBLESHOOTING:
+================================================================================
+
+PROBLEM: Extension not showing in toolbar
+SOLUTION: Click puzzle icon → Find extension → Click pin icon
+
+PROBLEM: "Could not load extension" error
+SOLUTION: Make sure you selected the "chrome-extension" folder, not parent folder
+
+PROBLEM: "No data found" message
+SOLUTION: Make sure you're on the correct page (Friends list, Groups, etc.)
+
+PROBLEM: Can't send to CRM
+SOLUTION: Make sure CRM is running at http://localhost/crm
+
+PROBLEM: Extension icon is missing
+SOLUTION: This is normal - Chrome will show a default icon. Extension will still work.
+
+================================================================================
+IMPORTANT NOTES:
+================================================================================
+
+- The extension only reads data from the CURRENTLY ACTIVE tab
+- You must navigate to the specific page (Friends, Groups, etc.) first
+- All data extraction happens locally on your computer
+- Data is only sent to CRM when you click "Send to CRM"
+- Make sure your CRM application is running before sending data
+- Comply with each platform's Terms of Service
+
+================================================================================
+EXTENSION LOCATION:
+================================================================================
+C:\xampp\htdocs\crm\public\chrome-extension
+
+All extension files are in this folder:
+- manifest.json (extension configuration)
+- popup.html (extension popup UI)
+- popup.js (extension logic)
+- content.js (data extraction script)
+- background.js (background service)
+- README.md (documentation)
+
+================================================================================
+
