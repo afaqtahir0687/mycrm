@@ -109,17 +109,42 @@ class ClientRegistrationController extends Controller
         $accounts = Account::orderBy('account_name')->get();
         $leads = Lead::orderBy('first_name')->orderBy('company_name')->get();
         $users = User::where('is_active', true)->orderBy('name')->get();
+
+        $leadId = $request->get('lead_id') ?? session()->pull('client_registration_lead_id');
+        if (!$leadId) {
+            $leadId = Lead::where('created_by', auth()->id())
+                ->orderByDesc('created_at')
+                ->value('id');
+        }
+        $lead = $leadId ? Lead::find($leadId) : null;
+        $leadData = $lead ? [
+            'first_name' => $lead->first_name ?? '',
+            'last_name' => $lead->last_name ?? '',
+            'email' => $lead->email ?? '',
+            'phone' => $lead->phone ?? '',
+            'mobile' => $lead->mobile ?? $lead->phone ?? '',
+            'address' => $lead->address ?? '',
+            'city' => $lead->city ?? '',
+            'state' => $lead->state ?? '',
+            'country' => $lead->country ?? '',
+            'postal_code' => $lead->postal_code ?? '',
+            'company_name' => $lead->company_name ?? '',
+            'website' => $lead->website ?? '',
+            'industry' => $lead->industry ?? '',
+            'notes' => $lead->notes ?? '',
+            'assigned_to' => $lead->assigned_to ?? null,
+        ] : [];
         
-        // Pre-populate from query parameters
+        // Pre-populate from query parameters/session
         $preSelected = [
-            'lead_id' => $request->get('lead_id'),
+            'lead_id' => $leadId,
             'account_id' => $request->get('account_id'),
-            'assigned_to' => $request->get('assigned_to'),
-            'owner_id' => $request->get('owner_id'),
+            'assigned_to' => $request->get('assigned_to') ?? ($leadData['assigned_to'] ?? null),
+            'owner_id' => $request->get('owner_id') ?? ($leadData['assigned_to'] ?? null),
             'client_type' => $request->get('client_type', 'contact'), // Default to contact
         ];
-        
-        return view('client-registration.create', compact('accounts', 'leads', 'users', 'preSelected'));
+
+        return view('client-registration.create', compact('accounts', 'leads', 'users', 'preSelected', 'leadData'));
     }
 
     public function store(Request $request)

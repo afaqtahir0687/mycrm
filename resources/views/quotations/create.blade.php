@@ -60,14 +60,14 @@
             </div>
             <div class="form-group">
                 <label>Quotation Date </label>
-                <input type="date" name="quotation_date" value="{{ old('quotation_date') }}" >
+                <input type="date" name="quotation_date" value="{{ old('quotation_date') }}" required>
                 @error('quotation_date')
                     <div class="error">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
                 <label>Valid Until </label>
-                <input type="text" name="valid_until" value="{{ old('valid_until') }}" >
+                <input type="date" name="valid_until" value="{{ old('valid_until') }}" >
                 @error('valid_until')
                     <div class="error">{{ $message }}</div>
                 @enderror
@@ -113,18 +113,13 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label>Status </label>
-                <select name="status" >
-                    <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                    <option value="new" {{ old('status') == 'new' ? 'selected' : '' }}>New</option>
-                    <option value="open" {{ old('status') == 'open' ? 'selected' : '' }}>Open</option>
-                    <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Closed</option>
+                <label>Status *</label>
+                <select name="status" required>
                     <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
                     <option value="sent" {{ old('status') == 'sent' ? 'selected' : '' }}>Sent</option>
-                    <option value="paid" {{ old('status') == 'paid' ? 'selected' : '' }}>Paid</option>
-                    <option value="won" {{ old('status') == 'won' ? 'selected' : '' }}>Won</option>
-                    <option value="lost" {{ old('status') == 'lost' ? 'selected' : '' }}>Lost</option>
+                    <option value="accepted" {{ old('status') == 'accepted' ? 'selected' : '' }}>Accepted</option>
+                    <option value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                    <option value="expired" {{ old('status') == 'expired' ? 'selected' : '' }}>Expired</option>
                 </select>
                 @error('status')
                     <div class="error">{{ $message }}</div>

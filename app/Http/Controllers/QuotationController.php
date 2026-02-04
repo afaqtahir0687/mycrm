@@ -7,6 +7,7 @@ use App\Models\Account;
 use App\Models\Contact;
 use App\Models\Deal;
 use App\Models\User;
+use App\Services\FaisDigitalClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -186,6 +187,150 @@ class QuotationController extends Controller
     {
         $quotation->delete();
         return redirect()->route('quotations.index')->with('success', 'Quotation deleted successfully.');
+    }
+
+    public function syncFromFaisDigital(Request $request)
+    {
+        try {
+            $client = new FaisDigitalClient();
+            $items = $client->fetchQuotations();
+
+            if (empty($items)) {
+                return redirect()->route('quotations.index')->with('warning', 'No quotations received from Fais Digital.');
+            }
+
+            $created = 0;
+            $updated = 0;
+            $skipped = 0;
+            $errors = [];
+
+            foreach ($items as $item) {
+                $quotationNumber = $item['quotation_number'] ?? $item['number'] ?? null;
+                if (empty($quotationNumber)) {
+                    $skipped++;
+                    continue;
+                }
+
+                $accountId = $this->resolveAccountId($item);
+                $contactId = $this->resolveContactId($item, $accountId);
+
+                $payload = $this->mapQuotationPayload($item);
+                $payload['account_id'] = $accountId;
+                $payload['contact_id'] = $contactId;
+
+                $existing = Quotation::where('quotation_number', $quotationNumber)->first();
+                if ($existing) {
+                    $existing->update($payload);
+                    $updated++;
+                } else {
+                    $payload['created_by'] = auth()->id();
+                    Quotation::create($payload);
+                    $created++;
+                }
+            }
+
+            $message = "Fais Digital sync completed. Created: {$created}, Updated: {$updated}, Skipped: {$skipped}.";
+            if (!empty($errors)) {
+                $message .= ' Errors: ' . implode('; ', array_slice($errors, 0, 3));
+            }
+
+            return redirect()->route('quotations.index')->with('success', $message);
+        } catch (\Exception $e) {
+            return redirect()->route('quotations.index')->with('error', 'Fais Digital sync failed: ' . $e->getMessage());
+        }
+    }
+
+    private function mapQuotationPayload(array $item): array
+    {
+        $status = strtolower($item['status'] ?? 'draft');
+        $allowedStatuses = ['draft', 'sent', 'accepted', 'rejected', 'expired'];
+        if (!in_array($status, $allowedStatuses, true)) {
+            $status = 'draft';
+        }
+
+        $subtotal = $item['subtotal'] ?? null;
+        $taxAmount = $item['tax_amount'] ?? null;
+        $discountAmount = $item['discount_amount'] ?? null;
+        $totalAmount = $item['total_amount'] ?? null;
+
+        if ($totalAmount === null) {
+            $totalAmount = ($subtotal ?? 0) + ($taxAmount ?? 0) - ($discountAmount ?? 0);
+        }
+
+        $quotationDate = $item['quotation_date'] ?? $item['date'] ?? now()->toDateString();
+        $validUntil = $item['valid_until'] ?? $item['validity_date'] ?? null;
+
+        return [
+            'quotation_number' => $item['quotation_number'] ?? ($item['number'] ?? null),
+            'deal_id' => $item['deal_id'] ?? null,
+            'quotation_date' => $quotationDate,
+            'valid_until' => $validUntil,
+            'subtotal' => $subtotal,
+            'tax_amount' => $taxAmount,
+            'discount_amount' => $discountAmount,
+            'total_amount' => $totalAmount,
+            'currency' => strtoupper($item['currency'] ?? 'USD'),
+            'status' => $status,
+            'terms_conditions' => $item['terms_conditions'] ?? $item['terms'] ?? null,
+            'notes' => $item['notes'] ?? null,
+        ];
+    }
+
+    private function resolveAccountId(array $item): ?int
+    {
+        if (!empty($item['account_id'])) {
+            return (int) $item['account_id'];
+        }
+
+        $accountName = $item['account_name'] ?? $item['account'] ?? null;
+        if (empty($accountName)) {
+            return null;
+        }
+
+        $account = Account::firstOrCreate(
+            ['account_name' => $accountName],
+            ['owner_id' => auth()->id()]
+        );
+
+        return $account->id;
+    }
+
+    private function resolveContactId(array $item, ?int $accountId): ?int
+    {
+        if (!empty($item['contact_id'])) {
+            return (int) $item['contact_id'];
+        }
+
+        $contactEmail = $item['contact_email'] ?? $item['email'] ?? null;
+        if (!empty($contactEmail)) {
+            $contact = Contact::firstOrCreate(
+                ['email' => $contactEmail],
+                [
+                    'first_name' => $item['contact_first_name'] ?? $item['first_name'] ?? 'Unknown',
+                    'last_name' => $item['contact_last_name'] ?? $item['last_name'] ?? '',
+                    'account_id' => $accountId,
+                ]
+            );
+
+            return $contact->id;
+        }
+
+        $contactName = $item['contact_name'] ?? null;
+        if (!empty($contactName)) {
+            $parts = preg_split('/\s+/', trim($contactName), 2);
+            $firstName = $parts[0] ?? 'Unknown';
+            $lastName = $parts[1] ?? '';
+
+            $contact = Contact::create([
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'account_id' => $accountId,
+            ]);
+
+            return $contact->id;
+        }
+
+        return null;
     }
     
     public function exportExcel()

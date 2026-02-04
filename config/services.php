@@ -34,5 +34,12 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'fais_digital' => [
+        'base_url' => env('FAIS_DIGITAL_BASE_URL', 'https://fais.digital'),
+        'api_key' => env('FAIS_DIGITAL_API_KEY'),
+        'scrape_endpoint' => env('FAIS_DIGITAL_SCRAPE_ENDPOINT'),
+        'quotations_endpoint' => env('FAIS_DIGITAL_QUOTATIONS_ENDPOINT'),
+        'timeout' => env('FAIS_DIGITAL_TIMEOUT', 20),
+    ],
 
 ];

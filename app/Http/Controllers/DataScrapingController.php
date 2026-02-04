@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\Models\Lead;
+use App\Services\FaisDigitalClient;
 
 class DataScrapingController extends Controller
 {
@@ -30,7 +31,7 @@ class DataScrapingController extends Controller
         // Validate based on source type
         if ($source === 'maps') {
             $request->validate([
-                'source' => 'required|string|in:maps,facebook,linkedin,instagram,twitter,tiktok',
+                'source' => 'required|string|in:maps,facebook,linkedin,instagram,twitter,tiktok,fais',
                 'country' => 'required|string|max:255',
                 'city' => 'required|string|max:255',
                 'business_type' => 'nullable|string|max:255',
@@ -39,7 +40,7 @@ class DataScrapingController extends Controller
         } else {
             // For social media, only source is required (data comes from extension)
             $request->validate([
-                'source' => 'required|string|in:maps,facebook,linkedin,instagram,twitter,tiktok',
+                'source' => 'required|string|in:maps,facebook,linkedin,instagram,twitter,tiktok,fais',
                 'country' => 'nullable|string|max:255',
                 'city' => 'nullable|string|max:255',
                 'business_type' => 'nullable|string|max:255',
@@ -56,6 +57,9 @@ class DataScrapingController extends Controller
         switch ($source) {
             case 'maps':
                 $results = $this->performScraping($source, $country, $city, $businessType, $companySize);
+                break;
+            case 'fais':
+                $results = $this->fetchFaisDigitalScrape($country, $city, $businessType, $companySize);
                 break;
             case 'facebook':
             case 'linkedin':
@@ -401,6 +405,61 @@ class DataScrapingController extends Controller
         shuffle($results);
         
         return $results;
+    }
+
+    private function fetchFaisDigitalScrape($country, $city, $businessType, $companySize)
+    {
+        try {
+            $client = new FaisDigitalClient();
+            $filters = array_filter([
+                'country' => $country,
+                'city' => $city,
+                'business_type' => $businessType,
+                'company_size' => $companySize,
+            ], function ($value) {
+                return $value !== null && $value !== '';
+            });
+
+            $items = $client->fetchScrapedLeads($filters);
+            if (empty($items)) {
+                return [];
+            }
+
+            $coords = $this->getCountryCoordinates($country, $city);
+            $mapped = [];
+            $counter = 1;
+
+            foreach ($items as $item) {
+                $lat = $item['latitude'] ?? $item['lat'] ?? $coords['lat'] ?? 0;
+                $lng = $item['longitude'] ?? $item['lng'] ?? $coords['lng'] ?? 0;
+                $address = $item['address'] ?? trim(($item['city'] ?? $city) . ', ' . ($item['country'] ?? $country), ', ');
+
+                $mapped[] = [
+                    'id' => $item['id'] ?? $counter,
+                    'company_name' => $item['company_name'] ?? $item['name'] ?? 'Unknown',
+                    'address' => $address,
+                    'phone' => $item['phone'] ?? null,
+                    'email' => $item['email'] ?? null,
+                    'website' => $item['website'] ?? $item['url'] ?? null,
+                    'business_type' => $item['business_type'] ?? $item['industry'] ?? null,
+                    'industry' => $item['industry'] ?? $item['business_type'] ?? null,
+                    'company_size' => $item['company_size'] ?? null,
+                    'latitude' => $lat,
+                    'longitude' => $lng,
+                    'source' => 'fais',
+                ];
+
+                $counter++;
+            }
+
+            return $mapped;
+        } catch (\Exception $e) {
+            Log::error('Fais Digital scrape failed: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+            ]);
+            session()->flash('error', 'Fais Digital connection failed. Please check API configuration.');
+            return [];
+        }
     }
     
     public function importToLeads(Request $request)

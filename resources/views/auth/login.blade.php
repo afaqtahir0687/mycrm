@@ -41,6 +41,9 @@
             </div>
             <button type="submit" class="btn-login">Login</button>
         </form>
+        <div style="text-align: center; margin-top: 14px; font-size: 14px; color: #666;">
+            New user? <a href="{{ route('register') }}" style="color: #1976d2; text-decoration: none;">Create account</a>
+        </div>
     </div>
 </body>
 </html>

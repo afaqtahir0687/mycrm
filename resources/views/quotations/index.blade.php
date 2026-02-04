@@ -8,6 +8,10 @@
         <h1 class="form-title">Quotations Management</h1>
         <div class="form-actions">
             <a href="{{ route('help.show', ['form' => 'quotations.index']) }}" target="_blank" class="btn btn-secondary" title="Help" style="background: #757575; color: white; padding: 8px 12px; font-size: 16px; font-weight: bold;">?</a>
+            <form method="POST" action="{{ route('quotations.sync-fais') }}" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-secondary">Sync Fais Digital</button>
+            </form>
             <a href="{{ route('quotations.create') }}" class="btn btn-primary">Add New Entry</a>
             <a href="{{ route('export.excel', ['resource' => 'quotations']) }}" class="btn btn-success">Export Excel</a>
             <a href="{{ route('export.pdf', ['resource' => 'quotations']) }}" class="btn btn-success">Export PDF</a>

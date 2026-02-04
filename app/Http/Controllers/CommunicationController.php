@@ -334,6 +334,16 @@ class CommunicationController extends Controller
             }
         }
         
+        $typeMap = [
+            'call' => 'phone',
+            'online_meeting' => 'meeting',
+            'personal_visit' => 'meeting',
+            'sms' => 'sms',
+            'email' => 'email',
+            'whatsapp' => 'whatsapp',
+        ];
+        $validated['type'] = $typeMap[$validated['type']] ?? 'note';
+
         $validated['engagement_status'] = 'completed';
         $validated['direction'] = 'outbound';
         $validated['created_by'] = auth()->id();

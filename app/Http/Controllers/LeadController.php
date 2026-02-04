@@ -105,9 +105,13 @@ class LeadController extends Controller
         
         $validated['created_by'] = auth()->id();
         
-        Lead::create($validated);
-        
-        return redirect()->route('leads.index')->with('success', 'Lead created successfully.');
+        $lead = Lead::create($validated);
+        session(['client_registration_lead_id' => $lead->id]);
+
+        return redirect()->route('client-registration.create', [
+            'lead_id' => $lead->id,
+            'assigned_to' => $lead->assigned_to,
+        ])->with('success', 'Lead created. You can now register this lead as a client.');
     }
 
     public function show(Lead $lead)

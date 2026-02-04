@@ -84,14 +84,14 @@
                 </div>
                 <div class="form-group">
                     <label>First Name *</label>
-                    <input type="text" name="first_name" id="first_name" value="{{ old('first_name') }}" required>
+                    <input type="text" name="first_name" id="first_name" value="{{ old('first_name', $leadData['first_name'] ?? '') }}" required>
                     @error('first_name')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" name="last_name" id="last_name" value="{{ old('last_name') }}">
+                    <input type="text" name="last_name" id="last_name" value="{{ old('last_name', $leadData['last_name'] ?? '') }}">
                     @error('last_name')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -105,21 +105,21 @@
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" id="email" value="{{ old('email') }}">
+                    <input type="email" name="email" id="email" value="{{ old('email', $leadData['email'] ?? '') }}">
                     @error('email')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" name="phone" id="phone" value="{{ old('phone') }}">
+                    <input type="text" name="phone" id="phone" value="{{ old('phone', $leadData['phone'] ?? '') }}">
                     @error('phone')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Mobile</label>
-                    <input type="text" name="mobile" id="mobile" value="{{ old('mobile') }}">
+                    <input type="text" name="mobile" id="mobile" value="{{ old('mobile', $leadData['mobile'] ?? '') }}">
                     @error('mobile')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -145,35 +145,35 @@
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
                     <label>Address</label>
-                    <textarea name="address" id="address" rows="2">{{ old('address') }}</textarea>
+                    <textarea name="address" id="address" rows="2">{{ old('address', $leadData['address'] ?? '') }}</textarea>
                     @error('address')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" name="city" id="city" value="{{ old('city') }}">
+                    <input type="text" name="city" id="city" value="{{ old('city', $leadData['city'] ?? '') }}">
                     @error('city')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>State</label>
-                    <input type="text" name="state" id="state" value="{{ old('state') }}">
+                    <input type="text" name="state" id="state" value="{{ old('state', $leadData['state'] ?? '') }}">
                     @error('state')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Country</label>
-                    <input type="text" name="country" id="country" value="{{ old('country') }}">
+                    <input type="text" name="country" id="country" value="{{ old('country', $leadData['country'] ?? '') }}">
                     @error('country')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Postal Code</label>
-                    <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code') }}">
+                    <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', $leadData['postal_code'] ?? '') }}">
                     @error('postal_code')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -209,7 +209,7 @@
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
                     <label>Notes</label>
-                    <textarea name="notes" id="notes" rows="4">{{ old('notes') }}</textarea>
+                    <textarea name="notes" id="notes" rows="4">{{ old('notes', $leadData['notes'] ?? '') }}</textarea>
                     @error('notes')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -222,7 +222,7 @@
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
                 <div class="form-group">
                     <label>Account Name *</label>
-                    <input type="text" name="account_name" id="account_name" value="{{ old('account_name') }}" required>
+                    <input type="text" name="account_name" id="account_name" value="{{ old('account_name', $leadData['company_name'] ?? '') }}" required>
                     @error('account_name')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -236,63 +236,63 @@
                 </div>
                 <div class="form-group">
                     <label>Industry</label>
-                    <input type="text" name="industry" id="industry" value="{{ old('industry') }}">
+                    <input type="text" name="industry" id="industry" value="{{ old('industry', $leadData['industry'] ?? '') }}">
                     @error('industry')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" id="account_email" value="{{ old('email') }}">
+                    <input type="email" name="email" id="account_email" value="{{ old('email', $leadData['email'] ?? '') }}">
                     @error('email')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" name="phone" id="account_phone" value="{{ old('phone') }}">
+                    <input type="text" name="phone" id="account_phone" value="{{ old('phone', $leadData['phone'] ?? '') }}">
                     @error('phone')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Website</label>
-                    <input type="url" name="website" id="website" value="{{ old('website') }}">
+                    <input type="url" name="website" id="website" value="{{ old('website', $leadData['website'] ?? '') }}">
                     @error('website')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
                     <label>Billing Address</label>
-                    <textarea name="billing_address" id="billing_address" rows="2">{{ old('billing_address') }}</textarea>
+                    <textarea name="billing_address" id="billing_address" rows="2">{{ old('billing_address', $leadData['address'] ?? '') }}</textarea>
                     @error('billing_address')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Billing City</label>
-                    <input type="text" name="billing_city" value="{{ old('billing_city') }}">
+                    <input type="text" name="billing_city" value="{{ old('billing_city', $leadData['city'] ?? '') }}">
                     @error('billing_city')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Billing State</label>
-                    <input type="text" name="billing_state" value="{{ old('billing_state') }}">
+                    <input type="text" name="billing_state" value="{{ old('billing_state', $leadData['state'] ?? '') }}">
                     @error('billing_state')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Billing Country</label>
-                    <input type="text" name="billing_country" value="{{ old('billing_country') }}">
+                    <input type="text" name="billing_country" value="{{ old('billing_country', $leadData['country'] ?? '') }}">
                     @error('billing_country')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Billing Postal Code</label>
-                    <input type="text" name="billing_postal_code" value="{{ old('billing_postal_code') }}">
+                    <input type="text" name="billing_postal_code" value="{{ old('billing_postal_code', $leadData['postal_code'] ?? '') }}">
                     @error('billing_postal_code')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -306,28 +306,28 @@
                 </div>
                 <div class="form-group">
                     <label>Shipping City</label>
-                    <input type="text" name="shipping_city" value="{{ old('shipping_city') }}">
+                    <input type="text" name="shipping_city" value="{{ old('shipping_city', $leadData['city'] ?? '') }}">
                     @error('shipping_city')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Shipping State</label>
-                    <input type="text" name="shipping_state" value="{{ old('shipping_state') }}">
+                    <input type="text" name="shipping_state" value="{{ old('shipping_state', $leadData['state'] ?? '') }}">
                     @error('shipping_state')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Shipping Country</label>
-                    <input type="text" name="shipping_country" value="{{ old('shipping_country') }}">
+                    <input type="text" name="shipping_country" value="{{ old('shipping_country', $leadData['country'] ?? '') }}">
                     @error('shipping_country')
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Shipping Postal Code</label>
-                    <input type="text" name="shipping_postal_code" value="{{ old('shipping_postal_code') }}">
+                    <input type="text" name="shipping_postal_code" value="{{ old('shipping_postal_code', $leadData['postal_code'] ?? '') }}">
                     @error('shipping_postal_code')
                         <div class="error">{{ $message }}</div>
                     @enderror
@@ -459,10 +459,34 @@ function populateFromLead(leadId) {
             document.getElementById('address').value = data.address;
             document.getElementById('billing_address').value = data.address;
         }
-        if (data.city) document.getElementById('city').value = data.city;
-        if (data.state) document.getElementById('state').value = data.state;
-        if (data.country) document.getElementById('country').value = data.country;
-        if (data.postal_code) document.getElementById('postal_code').value = data.postal_code;
+        if (data.city) {
+            document.getElementById('city').value = data.city;
+            const billingCity = document.querySelector('input[name="billing_city"]');
+            const shippingCity = document.querySelector('input[name="shipping_city"]');
+            if (billingCity) billingCity.value = data.city;
+            if (shippingCity) shippingCity.value = data.city;
+        }
+        if (data.state) {
+            document.getElementById('state').value = data.state;
+            const billingState = document.querySelector('input[name="billing_state"]');
+            const shippingState = document.querySelector('input[name="shipping_state"]');
+            if (billingState) billingState.value = data.state;
+            if (shippingState) shippingState.value = data.state;
+        }
+        if (data.country) {
+            document.getElementById('country').value = data.country;
+            const billingCountry = document.querySelector('input[name="billing_country"]');
+            const shippingCountry = document.querySelector('input[name="shipping_country"]');
+            if (billingCountry) billingCountry.value = data.country;
+            if (shippingCountry) shippingCountry.value = data.country;
+        }
+        if (data.postal_code) {
+            document.getElementById('postal_code').value = data.postal_code;
+            const billingPostal = document.querySelector('input[name="billing_postal_code"]');
+            const shippingPostal = document.querySelector('input[name="shipping_postal_code"]');
+            if (billingPostal) billingPostal.value = data.postal_code;
+            if (shippingPostal) shippingPostal.value = data.postal_code;
+        }
         if (data.notes) document.getElementById('notes').value = data.notes;
         
         // If company name exists, populate account fields and suggest switching to account

@@ -117,6 +117,7 @@
                     <select name="source" id="source-select" class="form-control" required onchange="handleSourceChange()">
                         <option value="">Select Source</option>
                         <option value="maps" {{ old('source', $filters['source'] ?? '') == 'maps' ? 'selected' : '' }}>Maps / Business Directories</option>
+                        <option value="fais" {{ old('source', $filters['source'] ?? '') == 'fais' ? 'selected' : '' }}>Fais Digital</option>
                         <option value="facebook" {{ old('source', $filters['source'] ?? '') == 'facebook' ? 'selected' : '' }}>Facebook (Groups/Friends)</option>
                         <option value="linkedin" {{ old('source', $filters['source'] ?? '') == 'linkedin' ? 'selected' : '' }}>LinkedIn</option>
                         <option value="instagram" {{ old('source', $filters['source'] ?? '') == 'instagram' ? 'selected' : '' }}>Instagram</option>
@@ -639,6 +640,7 @@
         
         const messages = {
             'maps': '✅ Scraping from Maps and Business Directories. Data will be fetched from publicly available business listings. Click "Start Scraping" to begin.',
+            'fais': '✅ Fais Digital connected. Data will be fetched from the configured API endpoint.',
             'facebook': '📥 Use Chrome Extension: 1) Install extension from public/chrome-extension folder 2) Open Facebook in a tab 3) Go to Friends/Groups page 4) Click extension icon → Extract → Send to CRM',
             'linkedin': '📥 Use Chrome Extension: 1) Install extension from public/chrome-extension folder 2) Open LinkedIn in a tab 3) Go to Connections/Search page 4) Click extension icon → Extract → Send to CRM',
             'instagram': '📥 Use Chrome Extension: 1) Install extension from public/chrome-extension folder 2) Open Instagram in a tab 3) Go to Followers/Following page 4) Click extension icon → Extract → Send to CRM',

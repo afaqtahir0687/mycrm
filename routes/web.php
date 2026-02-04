@@ -35,6 +35,12 @@ Route::get('/login', function () {
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->middleware('guest');
 
+Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])
+    ->name('register')
+    ->middleware('guest');
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])
+    ->middleware('guest');
+
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 // Extension routes - outside auth middleware to allow extension access
@@ -72,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/client-registration/get-lead-data/{lead}', [App\Http\Controllers\ClientRegistrationController::class, 'getLeadData'])->name('client-registration.get-lead-data');
     Route::resource('deals', DealController::class);
     Route::resource('opportunities', OpportunityController::class);
+    Route::post('/quotations/sync/fais-digital', [QuotationController::class, 'syncFromFaisDigital'])->name('quotations.sync-fais');
     Route::resource('quotations', QuotationController::class);
     Route::get('/quotations/{quotation}/print', [QuotationController::class, 'print'])->name('quotations.print');
     Route::resource('products', App\Http\Controllers\ProductController::class);
@@ -83,10 +90,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('support-tickets', SupportTicketController::class);
     Route::get('/support-tickets/resolution', [SupportTicketController::class, 'resolution'])->name('support-tickets.resolution');
     Route::resource('tasks', TaskController::class);
-    Route::resource('communications', CommunicationController::class);
     Route::post('/communications/record-lead-communication', [CommunicationController::class, 'recordLeadCommunication'])->name('communications.record-lead');
     Route::get('/communications/my-engagements', [CommunicationController::class, 'myEngagements'])->name('communications.my-engagements');
     Route::get('/communications/engagement-summary', [CommunicationController::class, 'engagementSummary'])->name('communications.engagement-summary');
+    Route::resource('communications', CommunicationController::class);
     Route::resource('automation-workflows', AutomationWorkflowController::class);
     Route::resource('users', UserManagementController::class);
     
